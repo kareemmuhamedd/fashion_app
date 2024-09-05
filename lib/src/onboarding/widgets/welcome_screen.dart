@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    // navigate to sign in screen
+                    context.go('/login');
                   },
                   child: const Text(
                     'Sign In',

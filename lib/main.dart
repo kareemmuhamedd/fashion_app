@@ -1,5 +1,6 @@
 import 'package:fashion_app/common/utils/app_routes.dart';
 import 'package:fashion_app/common/utils/kstrings.dart';
+import 'package:fashion_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashion_app/src/onboarding/controllers/onboarding_notifier.dart';
 import 'package:fashion_app/src/splash_screen/views/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => OnboardingNotifier()),
+        ChangeNotifierProvider(create: (_) => TabIndexNotifier()),
       ],
       child: const MyApp(),
     ),
