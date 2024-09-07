@@ -86,9 +86,9 @@ class HomeSlider extends StatelessWidget {
   }
 }
 
-List<String> images = [
-  "https://wallpaperaccess.com/full/2489629.jpg",
-  "https://wallpaperaccess.com/full/2489629.jpg",
-  "https://wallpaperaccess.com/full/2489629.jpg",
-  "https://wallpaperaccess.com/full/2489629.jpg",
-];
+// List<String> images = [
+//   "https://wallpaperaccess.com/full/2489629.jpg",
+//   "https://wallpaperaccess.com/full/2489629.jpg",
+//   "https://wallpaperaccess.com/full/2489629.jpg",
+//   "https://wallpaperaccess.com/full/2489629.jpg",
+// ];
