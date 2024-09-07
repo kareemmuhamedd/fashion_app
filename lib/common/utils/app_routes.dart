@@ -1,6 +1,10 @@
 
 import 'package:fashion_app/src/auth/views/login_screen.dart';
+import 'package:fashion_app/src/categories/views/categories_screen.dart';
+import 'package:fashion_app/src/categories/views/category_screen.dart';
 import 'package:fashion_app/src/entrypoint/views/entrypoint.dart';
+import 'package:fashion_app/src/notification/views/notification_screen.dart';
+import 'package:fashion_app/src/search/views/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,10 +41,10 @@ final GoRouter _router = GoRouter(
     //   path: '/verification',
     //   builder: (context, state) => const VerificationPage(),
     // ),
-    // GoRoute(
-    //   path: '/search',
-    //   builder: (context, state) => const SearchPage(),
-    // ),
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
+    ),
     // GoRoute(
     //   path: '/help',
     //   builder: (context, state) => const HelpCenterPage(),
@@ -57,14 +61,14 @@ final GoRouter _router = GoRouter(
     //   path: '/register',
     //   builder: (context, state) => const RegistrationPage(),
     // ),
-    // GoRoute(
-    //   path: '/categories',
-    //   builder: (context, state) => const CategoriesPage(),
-    // ),
-    //  GoRoute(
-    //   path: '/category',
-    //   builder: (context, state) => const CategoryPage(),
-    // ),
+    GoRoute(
+      path: '/categories',
+      builder: (context, state) => const CategoriesScreen(),
+    ),
+     GoRoute(
+      path: '/category',
+      builder: (context, state) => const CategoryScreen(),
+    ),
     //
     // GoRoute(
     //   path: '/addaddress',
@@ -76,10 +80,10 @@ final GoRouter _router = GoRouter(
     //   builder: (context, state) => const AddressesListPage(),
     // ),
     //
-    //  GoRoute(
-    //   path: '/notifications',
-    //   builder: (context, state) => const NotificationPage(),
-    // ),
+     GoRoute(
+      path: '/notifications',
+      builder: (context, state) => const NotificationsScreen(),
+    ),
     //
     //  GoRoute(
     //   path: '/tracking',
