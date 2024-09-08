@@ -246,7 +246,7 @@ class ProductScreen extends StatelessWidget {
                       context.read<ColorSizesNotifier>().sizes == '') {
                     showErrorPopup(context, AppText.kCartErrorText, 'Error Adding to Cart', true);
                   } else {
-                    print('ADD TO CART');
+                   // todo handle add to cart functionality
                   }
 
                 }
