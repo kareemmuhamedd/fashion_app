@@ -17,7 +17,7 @@ void showErrorPopup(
           title ?? 'Error',
           style: appStyle(
             18.0,
-            Kolors.kGrayLight,
+            Kolors.kRed,
             FontWeight.bold,
           ),
         ),

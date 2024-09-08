@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fashion_app/common/utils/kstrings.dart';
 import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/back_button.dart';
+import 'package:fashion_app/common/widgets/error_modal.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
+import 'package:fashion_app/src/products/controllers/color_sizes_notifier.dart';
 import 'package:fashion_app/src/products/controllers/product_notifier.dart';
 import 'package:fashion_app/src/products/widgets/color_selection_widget.dart';
 import 'package:fashion_app/src/products/widgets/expandable_text.dart';
+import 'package:fashion_app/src/products/widgets/product_bottom_bar.dart';
 import 'package:fashion_app/src/products/widgets/product_sizes_widget.dart';
 import 'package:fashion_app/src/products/widgets/similar_product.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +17,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
+import '../../../common/services/storage.dart';
 import '../../../common/utils/kcolors.dart';
+import '../../../common/widgets/login_bottom_sheet.dart';
 import '../../../const/constants.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -26,6 +32,7 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? accessToken = Storage().getString('accessToken');
     return Consumer<ProductNotifier>(
       builder: (context, productNotifier, child) {
         return Scaffold(
@@ -230,6 +237,21 @@ class ProductScreen extends StatelessWidget {
               ),
             ],
           ),
+          bottomNavigationBar: ProductBottomBar(
+              onPressed: () {
+                if (accessToken != null) {
+                  loginBottomSheet(context);
+                } else {
+                  if (context.read<ColorSizesNotifier>().color == '' ||
+                      context.read<ColorSizesNotifier>().sizes == '') {
+                    showErrorPopup(context, AppText.kCartErrorText, 'Error Adding to Cart', true);
+                  } else {
+                    print('ADD TO CART');
+                  }
+
+                }
+              },
+              price: productNotifier.product!.price.toStringAsFixed(1)),
         );
       },
     );
