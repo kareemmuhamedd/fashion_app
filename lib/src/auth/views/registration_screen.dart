@@ -1,26 +1,26 @@
-import 'package:fashion_app/common/utils/kcolors.dart';
+import 'package:flutter/material.dart';import 'package:fashion_app/common/utils/kcolors.dart';
 import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/custom_button.dart';
 import 'package:fashion_app/common/widgets/email_textfield.dart';
 import 'package:fashion_app/common/widgets/password_field.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import '../../../common/widgets/back_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   late final TextEditingController _usernameController =
-      TextEditingController();
+  TextEditingController();
+  late final TextEditingController _emailController =
+  TextEditingController();
   late final TextEditingController _passwordController =
-      TextEditingController();
+  TextEditingController();
   final FocusNode _passwordNode = FocusNode();
 
   @override
@@ -38,11 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading:  AppBackButton(
-          onTap: () {
-           context.go('/home');
-          },
-        ),
+        leading: const AppBackButton(),
       ),
       body: ListView(
         children: [
@@ -79,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 EmailTextField(
                   radius: 25,
-                  focusNode: _passwordNode,
                   hintText: 'Username',
                   controller: _usernameController,
                   prefixIcon: const Icon(
@@ -88,6 +83,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Kolors.kGray,
                   ),
                   keyboardType: TextInputType.name,
+                  onEditingComplete: () {
+                    FocusScope.of(context).requestFocus(_passwordNode);
+                  },
+                ),
+                SizedBox(
+                  height: 25.h,
+                ),
+                EmailTextField(
+                  radius: 25,
+                  focusNode: _passwordNode,
+                  hintText: 'Email',
+                  controller: _emailController,
+                  prefixIcon: const Icon(
+                    CupertinoIcons.mail,
+                    size: 20,
+                    color: Kolors.kGray,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
                   onEditingComplete: () {
                     FocusScope.of(context).requestFocus(_passwordNode);
                   },
@@ -107,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () {
                     // login
                   },
-                  text: 'LOGIN',
+                  text: 'SIGN UP',
                   btnWidth: ScreenUtil().screenWidth,
                   btnHieght: 35,
                   radius: 20,
@@ -116,23 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: SizedBox(
-        height: 130.h,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 110),
-          child: Center(
-            child: GestureDetector(
-              onTap: () {
-                context.push('/register');
-              },
-              child: Text(
-                'Don\'t have an account? Register a new one',
-                style: appStyle(12, Colors.blue, FontWeight.normal),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }

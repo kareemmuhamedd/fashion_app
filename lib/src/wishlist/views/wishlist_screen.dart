@@ -5,11 +5,18 @@ import 'package:fashion_app/common/widgets/reusable_text.dart';
 import 'package:fashion_app/src/products/widgets/explore_products.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/services/storage.dart';
+import '../../auth/views/login_screen.dart';
+
 class WishListScreen extends StatelessWidget {
   const WishListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    String? accessToken = Storage().getString('accessToken');
+    if (accessToken == null) {
+      return const LoginScreen();
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
