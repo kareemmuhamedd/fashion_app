@@ -3,10 +3,13 @@ import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/custom_button.dart';
 import 'package:fashion_app/common/widgets/email_textfield.dart';
 import 'package:fashion_app/common/widgets/password_field.dart';
+import 'package:fashion_app/src/auth/controllers/auth_notifier.dart';
+import 'package:fashion_app/src/auth/models/login_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../../common/widgets/back_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,9 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading:  AppBackButton(
+        leading: AppBackButton(
           onTap: () {
-           context.go('/home');
+            context.go('/home');
           },
         ),
       ),
@@ -103,15 +106,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                CustomButton(
-                  onTap: () {
-                    // login
-                  },
-                  text: 'LOGIN',
-                  btnWidth: ScreenUtil().screenWidth,
-                  btnHieght: 35,
-                  radius: 20,
-                )
+                context.watch<AuthNotifier>().isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Kolors.kPrimary,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Kolors.kWhite),
+                        ),
+                      )
+                    : CustomButton(
+                        onTap: () {
+                          LoginModel model = LoginModel(
+                            password: _passwordController.text,
+                            username: _usernameController.text,
+                          );
+                          String data = loginModelToJson(model);
+                          context.read<AuthNotifier>().loginFunc(data, context);
+                        },
+                        text: 'LOGIN',
+                        btnWidth: ScreenUtil().screenWidth,
+                        btnHieght: 35,
+                        radius: 20,
+                      )
               ],
             ),
           ),
