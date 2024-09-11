@@ -5,6 +5,7 @@ import 'package:fashion_app/common/widgets/reusable_text.dart';
 import 'package:fashion_app/src/categories/controllers/category_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../products/widgets/product_by_category.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
@@ -24,6 +25,7 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
       ),
+      body: const ProductByCategory(),
     );
   }
 }
