@@ -34,6 +34,5 @@ class HomeTabNotifier with ChangeNotifier{
 
   void setQueryType(QueryType type){
     queryType = type;
-   print('queryType: ${type.name}');
   }
 }
