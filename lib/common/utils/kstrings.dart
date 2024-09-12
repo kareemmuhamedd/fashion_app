@@ -15,6 +15,8 @@ class AppText {
   static const String kCartErrorText =
       'Please select size and color to proceed';
   static const String kSearch = 'Search';
+  static const String kSearchHint = 'Search For Latest Fashion';
+  static const String kSearchResults = 'Search Results';
 
   static const String kProfilePic =
       'https://firebasestorage.googleapis.com/v0/b/authenification-b4dc9.appspot.com/o/uploads%2Favatar.png?alt=media&token=7da81de9-a163-4296-86ac-3194c490ce15';

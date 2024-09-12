@@ -18,10 +18,11 @@ class SimilarProduct extends HookWidget {
   @override
   Widget build(BuildContext context) {
     String? accessToken = Storage().getString('accessToken');
+    /// i think the following it should be product id
     final results =
         fetchSimilarProducts(context.read<ProductNotifier>().product!.category);
 
-    /// i think it should be product id
+
     final products = results.products;
     final isLoading = results.isLoading;
     final error = results.error;
