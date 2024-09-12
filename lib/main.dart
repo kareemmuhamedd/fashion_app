@@ -8,6 +8,7 @@ import 'package:fashion_app/src/home/controllers/home_tab_notifier.dart';
 import 'package:fashion_app/src/onboarding/controllers/onboarding_notifier.dart';
 import 'package:fashion_app/src/products/controllers/color_sizes_notifier.dart';
 import 'package:fashion_app/src/products/controllers/product_notifier.dart';
+import 'package:fashion_app/src/search/controllers/search_notifier.dart';
 import 'package:fashion_app/src/splash_screen/views/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,7 +34,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ColorSizesNotifier()),
         ChangeNotifierProvider(create: (_) => PasswordNotifier()),
         ChangeNotifierProvider(create: (_) => AuthNotifier()),
-
+        ChangeNotifierProvider(create: (_) => SearchNotifier()),
       ],
       child: const MyApp(),
     ),

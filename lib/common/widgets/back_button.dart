@@ -8,7 +8,8 @@ class AppBackButton extends StatelessWidget {
   const AppBackButton({
     super.key,
     this.color,
-    this.size, this.onTap,
+    this.size,
+    this.onTap,
   });
 
   final Color? color;
