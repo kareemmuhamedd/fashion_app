@@ -13,6 +13,20 @@ class WishlistNotifier with ChangeNotifier {
     error = e;
     notifyListeners();
   }
+  WishlistNotifier() {
+    // Call to load wishlist from local storage when the notifier is initialized
+    loadWishlistFromStorage();
+  }
+
+  // Function to load the wishlist from storage
+  void loadWishlistFromStorage() {
+    String? accessToken = Storage().getString('accessToken');
+    String? wishlist = Storage().getString('${accessToken}wishlist');
+    if (wishlist != null) {
+      _wishlist = List<int>.from(jsonDecode(wishlist));
+    }
+    notifyListeners();
+  }
 
   void addRemoveWishlist(int id, Function refetch) async {
     final accessToken = Storage().getString('accessToken');
