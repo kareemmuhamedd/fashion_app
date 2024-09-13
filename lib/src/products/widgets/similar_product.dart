@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../common/services/storage.dart';
 import '../../../const/constants.dart';
+import '../../wishlist/controllers/wishlist_notifier.dart';
 
 class SimilarProduct extends HookWidget {
   const SimilarProduct({super.key});
@@ -53,7 +54,9 @@ class SimilarProduct extends HookWidget {
                         if (accessToken == null) {
                           loginBottomSheet(context);
                         } else {
-                          // todo handle wishlist functionality
+                          context
+                              .read<WishlistNotifier>()
+                              .addRemoveWishlist(product.id, () {});
                         }
                       },
                       index: index,
