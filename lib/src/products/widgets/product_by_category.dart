@@ -10,6 +10,7 @@ import '../../../common/services/storage.dart';
 import '../../../common/widgets/empty_widget.dart';
 import '../../../common/widgets/login_bottom_sheet.dart';
 import '../../categories/hook/fetch_product_by_category.dart';
+import '../../wishlist/controllers/wishlist_notifier.dart';
 
 class ProductByCategory extends HookWidget {
   const ProductByCategory({
@@ -51,7 +52,9 @@ class ProductByCategory extends HookWidget {
                         if (accessToken == null) {
                           loginBottomSheet(context);
                         } else {
-                          // todo handle wishlist functionality
+                          context
+                              .read<WishlistNotifier>()
+                              .addRemoveWishlist(product.id, () {});
                         }
                       },
                       index: index,

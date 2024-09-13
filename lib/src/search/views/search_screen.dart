@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widgets/login_bottom_sheet.dart';
 import '../../products/widgets/staggered_tile_widget.dart';
+import '../../wishlist/controllers/wishlist_notifier.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -83,60 +84,69 @@ class _SearchScreenState extends State<SearchScreen> {
         builder: (context, searchNotifier, child) {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.w),
-            child: ListView(children: [
-              searchNotifier.results.isNotEmpty
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ReusableText(
-                          text: AppText.kSearchResults,
-                          style: appStyle(
-                            13,
-                            Kolors.kPrimary,
-                            FontWeight.w600,
+            child: ListView(
+              children: [
+                searchNotifier.results.isNotEmpty
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ReusableText(
+                            text: AppText.kSearchResults,
+                            style: appStyle(
+                              13,
+                              Kolors.kPrimary,
+                              FontWeight.w600,
+                            ),
                           ),
-                        ),
-                        ReusableText(
-                          text: searchNotifier.searchKey,
-                          style: appStyle(
-                            13,
-                            Kolors.kPrimary,
-                            FontWeight.w600,
-                          ),
-                        )
-                      ],
-                    )
-                  : const SizedBox.shrink(),
-              SizedBox(height: 10.h,),
-              searchNotifier.results.isNotEmpty?StaggeredGrid.count(
-                crossAxisCount: 4,
-                mainAxisSpacing: 4,
-                crossAxisSpacing: 4,
-                children: List.generate(
-                  searchNotifier.results.length,
-                      (index) {
-                    final double mainAxisCellCount =
-                    (index % 2 == 0) ? 2.17 : 2.4;
-                    final product = searchNotifier.results[index];
-                    return StaggeredGridTile.count(
-                      crossAxisCellCount: 2,
-                      mainAxisCellCount: mainAxisCellCount,
-                      child: StaggeredTileWidget(
-                        onTap: () {
-                          if (accessToken == null) {
-                            loginBottomSheet(context);
-                          } else {
-                            // todo handle wishlist functionality
-                          }
-                        },
-                        index: index,
-                        product: product,
-                      ),
-                    );
-                  },
+                          ReusableText(
+                            text: searchNotifier.searchKey,
+                            style: appStyle(
+                              13,
+                              Kolors.kPrimary,
+                              FontWeight.w600,
+                            ),
+                          )
+                        ],
+                      )
+                    : const SizedBox.shrink(),
+                SizedBox(
+                  height: 10.h,
                 ),
-              ):const EmptyScreenWidget(),
-            ],),
+                searchNotifier.results.isNotEmpty
+                    ? StaggeredGrid.count(
+                        crossAxisCount: 4,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4,
+                        children: List.generate(
+                          searchNotifier.results.length,
+                          (index) {
+                            final double mainAxisCellCount =
+                                (index % 2 == 0) ? 2.17 : 2.4;
+                            final product = searchNotifier.results[index];
+                            return StaggeredGridTile.count(
+                              crossAxisCellCount: 2,
+                              mainAxisCellCount: mainAxisCellCount,
+                              child: StaggeredTileWidget(
+                                onTap: () {
+                                  if (accessToken == null) {
+                                    loginBottomSheet(context);
+                                  } else {
+                                    context
+                                        .read<WishlistNotifier>()
+                                        .addRemoveWishlist(
+                                        product.id, () {});
+                                  }
+                                },
+                                index: index,
+                                product: product,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : const EmptyScreenWidget(),
+              ],
+            ),
           );
         },
       ),

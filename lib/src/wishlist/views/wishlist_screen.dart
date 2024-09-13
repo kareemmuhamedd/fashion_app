@@ -3,6 +3,7 @@ import 'package:fashion_app/common/utils/kstrings.dart';
 import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
 import 'package:fashion_app/src/products/widgets/explore_products.dart';
+import 'package:fashion_app/src/wishlist/widgets/wishlist_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/services/storage.dart';
@@ -32,7 +33,7 @@ class WishListScreen extends StatelessWidget {
       ),
       body: const Padding(
         padding: EdgeInsets.all(8.0),
-        child: ExploreProducts(),
+        child: WishlistWidget(),
       ),
     );
   }

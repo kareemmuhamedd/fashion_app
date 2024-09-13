@@ -2,6 +2,7 @@ import 'package:fashion_app/common/widgets/login_bottom_sheet.dart';
 import 'package:fashion_app/src/home/controllers/home_tab_notifier.dart';
 import 'package:fashion_app/src/products/hooks/fetch_products.dart';
 import 'package:fashion_app/src/products/widgets/staggered_tile_widget.dart';
+import 'package:fashion_app/src/wishlist/controllers/wishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,7 +58,9 @@ class ExploreProducts extends HookWidget {
                         if (accessToken == null) {
                           loginBottomSheet(context);
                         } else {
-                          // todo handle wishlist functionality
+                          context
+                              .read<WishlistNotifier>()
+                              .addRemoveWishlist(product.id, () {});
                         }
                       },
                       index: index,

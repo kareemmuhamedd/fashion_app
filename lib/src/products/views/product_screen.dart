@@ -21,6 +21,7 @@ import '../../../common/services/storage.dart';
 import '../../../common/utils/kcolors.dart';
 import '../../../common/widgets/login_bottom_sheet.dart';
 import '../../../const/constants.dart';
+import '../../wishlist/controllers/wishlist_notifier.dart';
 
 class ProductScreen extends StatelessWidget {
   final String productId;
@@ -48,16 +49,32 @@ class ProductScreen extends StatelessWidget {
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: const CircleAvatar(
-                        backgroundColor: Kolors.kSecondaryLight,
-                        child: Icon(
-                          AntDesign.heart,
-                          color: Kolors.kRed,
-                          size: 18,
-                        ),
-                      ),
+                    child: Consumer<WishlistNotifier>(
+                      builder: (context, wishlistNotifier, child) {
+                        return GestureDetector(
+                           onTap: () {
+                            if (accessToken == null) {
+                              loginBottomSheet(context);
+                            } else {
+                              context
+                                  .read<WishlistNotifier>()
+                                  .addRemoveWishlist(
+                                      productNotifier.product!.id, () {});
+                            }
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Kolors.kSecondaryLight,
+                            child: Icon(
+                              AntDesign.heart,
+                              color: wishlistNotifier.wishlist
+                                      .contains(productNotifier.product!.id)
+                                  ? Kolors.kRed
+                                  : Kolors.kGray,
+                              size: 18,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   )
                 ],
@@ -244,11 +261,11 @@ class ProductScreen extends StatelessWidget {
                 } else {
                   if (context.read<ColorSizesNotifier>().color == '' ||
                       context.read<ColorSizesNotifier>().sizes == '') {
-                    showErrorPopup(context, AppText.kCartErrorText, 'Error Adding to Cart', true);
+                    showErrorPopup(context, AppText.kCartErrorText,
+                        'Error Adding to Cart', true);
                   } else {
-                   // todo handle add to cart functionality
+                    // todo handle add to cart functionality
                   }
-
                 }
               },
               price: productNotifier.product!.price.toStringAsFixed(1)),
