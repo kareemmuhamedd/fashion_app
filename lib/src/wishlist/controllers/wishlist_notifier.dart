@@ -8,10 +8,12 @@ import 'package:http/http.dart' as http;
 
 class WishlistNotifier with ChangeNotifier {
   String? error;
+
   void setError(String e) {
     error = e;
     notifyListeners();
   }
+
   void addRemoveWishlist(int id, Function refetch) async {
     final accessToken = Storage().getString('accessToken');
     try {
@@ -28,7 +30,7 @@ class WishlistNotifier with ChangeNotifier {
         // SET THE ID TO A LIST IN OUR LOCAL STORAGE
         setToList(id);
         refetch();
-      }else if(response.statusCode == 204){
+      } else if (response.statusCode == 204) {
         // REMOVE THE ID FROM THE LIST IN OUR LOCAL STORAGE
         setToList(id);
         refetch();
@@ -41,31 +43,30 @@ class WishlistNotifier with ChangeNotifier {
   }
 
   List _wishlist = [];
+
   List get wishlist => _wishlist;
+
   void setWishlist(List val) {
     _wishlist.clear();
     _wishlist = val;
     notifyListeners();
   }
 
-  void setToList(int val){
+  void setToList(int val) {
     String? accessToken = Storage().getString('accessToken');
     String? wishlist = Storage().getString('${accessToken}wishlist');
-    if(wishlist==null){
+    if (wishlist == null) {
       List wishlist = [];
       wishlist.add(val);
       setWishlist(wishlist);
-      print('PORTSAID');
       Storage().setString('${accessToken}wishlist', jsonEncode(wishlist));
-    }else{
+    } else {
       List w = jsonDecode(wishlist);
-      if(w.contains(val)){
-        print('EL GEDIDA');
+      if (w.contains(val)) {
         w.removeWhere((e) => e == val);
         setWishlist(w);
         Storage().setString('${accessToken}wishlist', jsonEncode(w));
-      }else if(!w.contains(val)){
-        print('HERE WE GO');
+      } else if (!w.contains(val)) {
         w.add(val);
         setWishlist(w);
         Storage().setString('${accessToken}wishlist', jsonEncode(w));

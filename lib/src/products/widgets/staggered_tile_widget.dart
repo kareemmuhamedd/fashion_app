@@ -4,6 +4,7 @@ import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
 import 'package:fashion_app/src/products/controllers/product_notifier.dart';
 import 'package:fashion_app/src/products/models/products_model.dart';
+import 'package:fashion_app/src/wishlist/controllers/wishlist_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -24,7 +25,7 @@ class StaggeredTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // String? accessToken = Storage().getString('accessToken');
+    // String? accessToken = Storage().getString('accessToken');
     return GestureDetector(
       onTap: () {
         context.read<ProductNotifier>().setProduct(product);
@@ -47,20 +48,26 @@ class StaggeredTileWidget extends StatelessWidget {
                       imageUrl: product.imageUrls[0],
                       fit: BoxFit.cover,
                     ),
-                    // todo: handel favorites
                     Positioned(
                       right: 10.h,
                       top: 10.h,
-                      child: GestureDetector(
-                        onTap: onTap,
-                        child: const CircleAvatar(
-                          backgroundColor: Kolors.kSecondaryLight,
-                          child: Icon(
-                            AntDesign.heart,
-                            color: Kolors.kRed,
-                            size: 18,
-                          ),
-                        ),
+                      child: Consumer<WishlistNotifier>(
+                        builder: (context, wishlistNotifier, child) {
+                          return GestureDetector(
+                            onTap: onTap,
+                            child: CircleAvatar(
+                              backgroundColor: Kolors.kSecondaryLight,
+                              child: Icon(
+                                AntDesign.heart,
+                                color: wishlistNotifier.wishlist
+                                        .contains(product.id)
+                                    ? Kolors.kRed
+                                    : Kolors.kGray,
+                                size: 18,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
