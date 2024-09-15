@@ -1,8 +1,6 @@
 import 'package:fashion_app/common/utils/environment.dart';
 import 'package:fashion_app/src/cart/hooks/results/cart_count_results.dart';
 import 'package:fashion_app/src/cart/models/cart_count_model.dart';
-import 'package:fashion_app/src/categories/hook/results/categories_resutls.dart';
-import 'package:fashion_app/src/categories/model/categories_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,10 +35,9 @@ FetchCartCount fetchCartCount() {
   }
 
   useEffect(() {
-    // if (accessToken != null) {
-    //   fetchData();
-    // }
-    fetchData();
+    if (accessToken != null) {
+      fetchData();
+    }
     return;
   }, const []);
 

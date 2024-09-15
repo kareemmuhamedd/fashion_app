@@ -172,7 +172,9 @@ class CartTile extends StatelessWidget {
                           ),
                           cartNotifier.selectedCart != null &&
                                   cartNotifier.selectedCart == cart.id
-                              ? const UpdateButton()
+                              ? UpdateButton(
+                                  onUpdate: onUpdate,
+                                )
                               : Padding(
                                   padding: EdgeInsets.only(right: 6.0.w),
                                   child: ReusableText(

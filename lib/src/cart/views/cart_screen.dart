@@ -1,7 +1,9 @@
+import 'package:fashion_app/src/cart/controllers/cart_notifier.dart';
 import 'package:fashion_app/src/cart/widgets/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import '../../../common/services/storage.dart';
 import '../../../common/utils/kcolors.dart';
 import '../../../common/utils/kstrings.dart';
@@ -43,12 +45,20 @@ class CartScreen extends HookWidget {
         centerTitle: true,
       ),
       body: ListView(
-        padding:  EdgeInsets.symmetric(horizontal: 12.w),
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
         children: List.generate(
           carts.length,
           (index) {
             final cart = carts[index];
-            return CartTile(cart: cart);
+            return CartTile(
+              cart: cart,
+              onUpdate: () {
+                context.read<CartNotifier>().updateCart(cart.id, refetch);
+              },
+              onDelete: () {
+                context.read<CartNotifier>().deleteCart(cart.id, refetch);
+              },
+            );
           },
         ),
       ),

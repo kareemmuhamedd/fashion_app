@@ -19,7 +19,7 @@ class UpdateButton extends StatelessWidget {
     return GestureDetector(
       onTap: onUpdate,
       onLongPress: () {
-        context.read<CartNotifier>().clearSelectedCart();
+        context.read<CartNotifier>().clearSelected();
       },
       child: Container(
         width: 65.w,
