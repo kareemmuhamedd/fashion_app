@@ -1,26 +1,30 @@
 import 'package:fashion_app/common/utils/kcolors.dart';
 import 'package:fashion_app/common/widgets/app_style.dart';
+import 'package:fashion_app/src/cart/hooks/fetch_cart_count.dart';
 import 'package:fashion_app/src/cart/views/cart_screen.dart';
 import 'package:fashion_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashion_app/src/home/views/home_screen.dart';
 import 'package:fashion_app/src/profile/views/profile_screen.dart';
 import 'package:fashion_app/src/wishlist/views/wishlist_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 
-class AppEntryPoint extends StatelessWidget {
-  AppEntryPoint({super.key});
+List<Widget> pageList = [
+  const HomeScreen(),
+  const WishListScreen(),
+  const CartScreen(),
+  const ProfileScreen(),
+];
 
-  List<Widget> pageList = [
-    const HomeScreen(),
-    const WishListScreen(),
-    const CartScreen(),
-    const ProfileScreen(),
-  ];
+class AppEntryPoint extends HookWidget {
+  const AppEntryPoint({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final result = fetchCartCount(context);
+    final count = result.count.cartCount;
     return Consumer<TabIndexNotifier>(
       builder: (context, tabIndexNotifier, child) {
         return Scaffold(
@@ -47,8 +51,9 @@ class AppEntryPoint extends StatelessWidget {
                     currentIndex: tabIndexNotifier.index,
                     selectedItemColor: Kolors.kPrimary,
                     unselectedItemColor: Kolors.kGray,
-                    unselectedIconTheme:
-                        const IconThemeData(color: Colors.black38),
+                    unselectedIconTheme: const IconThemeData(
+                      color: Colors.black38,
+                    ),
                     onTap: (index) {
                       tabIndexNotifier.setIndex(index);
                     },
@@ -80,17 +85,17 @@ class AppEntryPoint extends StatelessWidget {
                       ),
                       BottomNavigationBarItem(
                         icon: tabIndexNotifier.index == 2
-                            ? const Badge(
-                                label: Text('9'),
-                                child: Icon(
+                            ? Badge(
+                                label: Text(count.toString()),
+                                child: const Icon(
                                   MaterialCommunityIcons.shopping,
                                   color: Kolors.kPrimary,
                                   size: 24,
                                 ),
                               )
-                            : const Badge(
-                                label: Text('9'),
-                                child: Icon(
+                            : Badge(
+                                label: Text(count.toString()),
+                                child: const Icon(
                                   MaterialCommunityIcons.shopping_outline,
                                 ),
                               ),
