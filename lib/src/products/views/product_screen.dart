@@ -4,6 +4,8 @@ import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/back_button.dart';
 import 'package:fashion_app/common/widgets/error_modal.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
+import 'package:fashion_app/src/cart/controllers/cart_notifier.dart';
+import 'package:fashion_app/src/cart/models/create_cart_model.dart';
 import 'package:fashion_app/src/products/controllers/color_sizes_notifier.dart';
 import 'package:fashion_app/src/products/controllers/product_notifier.dart';
 import 'package:fashion_app/src/products/widgets/color_selection_widget.dart';
@@ -52,7 +54,7 @@ class ProductScreen extends StatelessWidget {
                     child: Consumer<WishlistNotifier>(
                       builder: (context, wishlistNotifier, child) {
                         return GestureDetector(
-                           onTap: () {
+                          onTap: () {
                             if (accessToken == null) {
                               loginBottomSheet(context);
                             } else {
@@ -256,15 +258,26 @@ class ProductScreen extends StatelessWidget {
           ),
           bottomNavigationBar: ProductBottomBar(
               onPressed: () {
-                if (accessToken != null) {
+                if (accessToken == null) {
                   loginBottomSheet(context);
                 } else {
                   if (context.read<ColorSizesNotifier>().color == '' ||
                       context.read<ColorSizesNotifier>().sizes == '') {
-                    showErrorPopup(context, AppText.kCartErrorText,
-                        'Error Adding to Cart', true);
+                    showErrorPopup(
+                      context,
+                      AppText.kCartErrorText,
+                      'Error Adding to Cart',
+                      true,
+                    );
                   } else {
-                    // todo handle add to cart functionality
+                    CreateCartModel data = CreateCartModel(
+                     product: context.read<ProductNotifier>().product!.id,
+                      quantity: 1,
+                      size: context.read<ColorSizesNotifier>().sizes,
+                      color: context.read<ColorSizesNotifier>().color,
+                    );
+                    String cartData = createCartModelToJson(data);
+                    context.read<CartNotifier>().addToCart(cartData, context);
                   }
                 }
               },
