@@ -1,6 +1,6 @@
 import 'package:fashion_app/common/services/storage.dart';
-import 'package:fashion_app/common/utils/app_routes.dart';
 import 'package:fashion_app/common/utils/environment.dart';
+import 'package:fashion_app/src/cart/models/cart_model.dart';
 import 'package:fashion_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashion_app/src/products/controllers/color_sizes_notifier.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,6 +43,8 @@ class CartNotifier with ChangeNotifier {
 
   void clearSelected() {
     _selectedCart = null;
+    // _selectedCartItems.clear();
+    // _selectedCartItemsId.clear();
     _qty = 0;
     notifyListeners();
   }
@@ -59,6 +61,10 @@ class CartNotifier with ChangeNotifier {
         },
       );
       if (response.statusCode == 204) {
+        _selectedCartItems.removeWhere((item) => item.id == id);
+        _selectedCartItemsId.remove(id);
+        totalPrice = calculateTotalPrice(_selectedCartItems);
+
         refetch();
         refetchCount!();
         clearSelected();
@@ -102,9 +108,7 @@ class CartNotifier with ChangeNotifier {
         },
       );
       if (response.statusCode == 201) {
-        // refetchCount
         refetchCount!();
-        // navigate to the cart
         ctx.read<ColorSizesNotifier>().setSizes('');
         ctx.read<ColorSizesNotifier>().setColor('');
         ctx.read<TabIndexNotifier>().setIndex(2);
@@ -113,5 +117,34 @@ class CartNotifier with ChangeNotifier {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  final List<int> _selectedCartItemsId = [];
+
+  List<int> get selectedCartItemsId => _selectedCartItemsId;
+  final List<CartModel> _selectedCartItems = [];
+
+  List<CartModel> get selectedCartItems => _selectedCartItems;
+  double totalPrice = 0.0;
+
+  double calculateTotalPrice(List<CartModel> items) {
+    double tp = 0.0;
+    for (var item in items) {
+      tp += item.product.price * item.quantity;
+    }
+    return tp;
+  }
+
+  void selectOrDeselect(int id, CartModel cartItem) {
+    if (_selectedCartItemsId.contains(id)) {
+      _selectedCartItemsId.remove(id);
+      _selectedCartItems.removeWhere((item) => item.id == id);
+      totalPrice = calculateTotalPrice(_selectedCartItems);
+    } else {
+      _selectedCartItemsId.add(id);
+      _selectedCartItems.add(cartItem);
+      totalPrice = calculateTotalPrice(_selectedCartItems);
+    }
+    notifyListeners();
   }
 }

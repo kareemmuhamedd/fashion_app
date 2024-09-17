@@ -31,7 +31,7 @@ class CartTile extends StatelessWidget {
       builder: (context, cartNotifier, child) {
         return GestureDetector(
           onTap: () {
-            // pushing id and cart item to controller
+            cartNotifier.selectOrDeselect(cart.id, cart);
           },
           child: Padding(
             padding: EdgeInsets.only(bottom: 8.h),
@@ -39,7 +39,9 @@ class CartTile extends StatelessWidget {
               width: ScreenUtil().screenWidth,
               height: 90.h,
               decoration: BoxDecoration(
-                color: Kolors.kWhite,
+                color: !cartNotifier.selectedCartItemsId.contains(cart.id)
+                    ? Kolors.kWhite
+                    : Kolors.kPrimaryLight.withOpacity(0.2),
                 borderRadius: kRadiusAll,
               ),
               child: SizedBox(
