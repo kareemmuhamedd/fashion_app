@@ -3,6 +3,7 @@ import 'package:fashion_app/src/auth/views/login_screen.dart';
 import 'package:fashion_app/src/auth/views/registration_screen.dart';
 import 'package:fashion_app/src/categories/views/categories_screen.dart';
 import 'package:fashion_app/src/categories/views/category_screen.dart';
+import 'package:fashion_app/src/checkout/views/checkout_screen.dart';
 import 'package:fashion_app/src/entrypoint/views/entrypoint.dart';
 import 'package:fashion_app/src/notification/views/notification_screen.dart';
 import 'package:fashion_app/src/products/views/product_screen.dart';
@@ -28,7 +29,7 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) =>  AppEntryPoint(),
+      builder: (context, state) =>  const AppEntryPoint(),
     ),
     GoRoute(
       path: '/onboarding',
@@ -95,10 +96,10 @@ final GoRouter _router = GoRouter(
     //   builder: (context, state) => const TrackOrderPage(),
     // ),
     //
-    // GoRoute(
-    //   path: '/checkout',
-    //   builder: (context, state) => const CheckoutPage(),
-    // ),
+    GoRoute(
+      path: '/checkout',
+      builder: (context, state) => const CheckoutScreen(),
+    ),
     //
     //   GoRoute(
     //   path: '/successful',

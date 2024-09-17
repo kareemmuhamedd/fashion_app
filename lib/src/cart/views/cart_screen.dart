@@ -1,8 +1,11 @@
+import 'package:fashion_app/common/utils/app_routes.dart';
+import 'package:fashion_app/const/constants.dart';
 import 'package:fashion_app/src/cart/controllers/cart_notifier.dart';
 import 'package:fashion_app/src/cart/widgets/cart_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../../common/services/storage.dart';
 import '../../../common/utils/kcolors.dart';
@@ -61,6 +64,53 @@ class CartScreen extends HookWidget {
             );
           },
         ),
+      ),
+      bottomNavigationBar: Consumer<CartNotifier>(
+        builder: (context, cartNotifier, child) {
+          return GestureDetector(
+            onTap: () {
+              context.push('/checkout');
+            },
+            child: cartNotifier.selectedCartItems.isNotEmpty
+                ? Container(
+                    padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 55.h),
+                    height: 97.h,
+                    decoration: BoxDecoration(
+                      borderRadius: kRadiusTop,
+                      color: Kolors.kPrimaryLight,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ReusableText(
+                            text: 'Click To Checkout',
+                            style: appStyle(
+                              15,
+                              Kolors.kWhite,
+                              FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ReusableText(
+                            text:
+                                '\$ ${cartNotifier.totalPrice.toStringAsFixed(2)}',
+                            style: appStyle(
+                              15,
+                              Kolors.kWhite,
+                              FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          );
+        },
       ),
     );
   }
