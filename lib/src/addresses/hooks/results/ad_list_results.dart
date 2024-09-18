@@ -1,13 +1,13 @@
 import 'dart:ui';
-import 'package:fashion_app/src/cart/models/cart_model.dart';
+import 'package:fashion_app/src/addresses/models/address_model.dart';
 
-class FetchCart{
-  final List<CartModel> cart;
+class FetchAddress{
+  final List<AddressModel> address;
   final bool isLoading;
   final String? error;
   final VoidCallback refetch;
-  FetchCart({
-    required this.cart,
+  FetchAddress({
+    required this.address,
     required this.isLoading,
     required this.error,
     required this.refetch,
