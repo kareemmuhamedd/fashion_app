@@ -9,12 +9,12 @@ FetchDefaultAddress fetchDefaultAddress() {
   final address = useState<AddressModel?>(null);
   final isLoading = useState(false);
   final error = useState<String?>(null);
+  String? accessToken = Storage().getString('accessToken');
 
   Future<void> fetchData() async {
     isLoading.value = true;
     try {
       Uri url = Uri.parse('${Environment.appBaseUrl}/api/address/me/');
-      String? accessToken = Storage().getString('accessToken');
 
       final response = await http.get(
         url,
@@ -34,7 +34,10 @@ FetchDefaultAddress fetchDefaultAddress() {
   }
 
   useEffect(() {
-    fetchData();
+    if (accessToken != null) {
+      fetchData();
+    }
+
     return;
   }, const []);
 
