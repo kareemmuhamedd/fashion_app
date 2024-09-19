@@ -85,7 +85,7 @@ class AddressTile extends StatelessWidget {
                   if (isCheckout == true) {
                     changeAddressBottomSheet(context);
                   } else {
-                    setDefault!();
+                    address.isDefault ? () {} : setDefault!();
                   }
                 },
                 child: Container(
@@ -108,12 +108,12 @@ class AddressTile extends StatelessWidget {
                     text: isCheckout == true
                         ? 'Change'
                         : addressNotifier.address == null
-                            ? address.isDefault != true
-                                ? "Set default"
-                                : "Default"
-                            : addressNotifier.address!.isDefault != true
-                                ? "Set default"
-                                : "Default",
+                            ? address.isDefault == true
+                                ? "Default"
+                                : "Set Default"
+                            : addressNotifier.address!.isDefault == true
+                                ? "Default"
+                                : "Set Default",
                     style: appStyle(
                       12,
                       Kolors.kWhite,
@@ -122,7 +122,7 @@ class AddressTile extends StatelessWidget {
                   ),
                 ),
               ),
-              isCheckout == true
+              isCheckout == true || address.isDefault
                   ? const SizedBox.shrink()
                   : GestureDetector(
                       onTap: onDelete,
