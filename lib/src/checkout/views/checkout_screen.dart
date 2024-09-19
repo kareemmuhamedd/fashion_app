@@ -3,6 +3,7 @@ import 'package:fashion_app/common/utils/kstrings.dart';
 import 'package:fashion_app/common/widgets/app_style.dart';
 import 'package:fashion_app/common/widgets/back_button.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
+import 'package:fashion_app/const/constants.dart';
 import 'package:fashion_app/src/addresses/widgets/address_block.dart';
 import 'package:fashion_app/src/cart/controllers/cart_notifier.dart';
 import 'package:fashion_app/src/checkout/widgets/checkout_tile.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../addresses/controllers/address_notifier.dart';
 import '../../addresses/hooks/fetch_default.dart';
 
 class CheckoutScreen extends HookWidget {
@@ -34,7 +36,9 @@ class CheckoutScreen extends HookWidget {
         ),
         leading: AppBackButton(
           onTap: () {
-            // clean the address and payment details
+            // clean the address
+            context.read<AddressNotifier>().clearAddress();
+
             context.pop();
           },
         ),
@@ -62,6 +66,33 @@ class CheckoutScreen extends HookWidget {
                 ),
               ),
             ],
+          );
+        },
+      ),
+      bottomNavigationBar: Consumer<CartNotifier>(
+        builder: (context, cartNotifier, child) {
+          return GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 80.h,
+              width: ScreenUtil().screenWidth,
+              decoration: BoxDecoration(
+                color: Kolors.kPrimaryLight,
+                borderRadius: kRadiusTop,
+              ),
+              child: Center(
+                child: ReusableText(
+                  text: address == null
+                      ? 'Please an address'
+                      : 'Continue to Payment',
+                  style: appStyle(
+                    16,
+                    Kolors.kWhite,
+                    FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
           );
         },
       ),

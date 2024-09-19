@@ -9,7 +9,7 @@ import 'package:fashion_app/src/notification/views/notification_screen.dart';
 import 'package:fashion_app/src/products/views/product_screen.dart';
 import 'package:fashion_app/src/profile/views/orders_screen.dart';
 import 'package:fashion_app/src/profile/views/policy_screen.dart';
-import 'package:fashion_app/src/profile/views/shipping_address_screen.dart';
+import 'package:fashion_app/src/addresses/views/shipping_address_screen.dart';
 import 'package:fashion_app/src/search/views/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
