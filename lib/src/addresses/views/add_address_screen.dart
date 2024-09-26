@@ -7,6 +7,7 @@ import 'package:fashion_app/common/widgets/error_modal.dart';
 import 'package:fashion_app/common/widgets/reusable_text.dart';
 import 'package:fashion_app/const/constants.dart';
 import 'package:fashion_app/src/addresses/controllers/address_notifier.dart';
+import 'package:fashion_app/src/addresses/models/create_address_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -150,10 +151,21 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       _phoneController.text.isNotEmpty &&
                       addressNotifier.addressType != '') {
                     // todo :: add address
+                    CreateAddressModel address = CreateAddressModel(
+                      lat: 0.0,
+                      lng: 0.0,
+                      isDefault: addressNotifier.defaultToggle,
+                      address: _addressController.text,
+                      phone: _phoneController.text,
+                      addressType: addressNotifier.addressType,
+                    );
+                    String data = createAddressModelToJson(address);
+                    print(data);
+                    addressNotifier.addAddress(data,context);
                   } else {
                     showErrorPopup(
                       context,
-                      'Missing Address Fields',
+                      'You Have Missing Address Fields',
                       'Error Adding Address',
                       false,
                     );

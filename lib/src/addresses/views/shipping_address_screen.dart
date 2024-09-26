@@ -32,6 +32,7 @@ class ShippingAddressScreen extends HookWidget {
         ),
       );
     }
+    context.read<AddressNotifier>().setRefetch(refetch);
     return Scaffold(
       appBar: AppBar(
         leading: const AppBackButton(),
