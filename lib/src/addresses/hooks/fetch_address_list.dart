@@ -1,7 +1,6 @@
 import 'package:fashion_app/common/services/storage.dart';
 import 'package:fashion_app/common/utils/environment.dart';
 import 'package:fashion_app/src/addresses/hooks/results/ad_list_results.dart';
-import 'package:fashion_app/src/addresses/hooks/results/default_results.dart';
 import 'package:fashion_app/src/addresses/models/address_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:http/http.dart' as http;

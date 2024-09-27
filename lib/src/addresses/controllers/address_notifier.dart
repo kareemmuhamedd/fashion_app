@@ -3,11 +3,18 @@ import 'package:fashion_app/common/utils/environment.dart';
 import 'package:fashion_app/common/widgets/error_modal.dart';
 import 'package:fashion_app/src/addresses/models/address_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../common/services/storage.dart';
 import 'package:http/http.dart' as http;
 
 class AddressNotifier with ChangeNotifier {
+  Function refetchA = () {};
+
+  void setRefetch(Function f) {
+    refetchA = f;
+  }
+
   AddressModel? address;
 
   void setAddress(AddressModel a) {
@@ -27,6 +34,7 @@ class AddressNotifier with ChangeNotifier {
 
   void setAddressType(String type) {
     _addressType = type;
+    notifyListeners();
   }
 
   void clearAddressType() {
@@ -49,7 +57,8 @@ class AddressNotifier with ChangeNotifier {
   void setAsDefault(int id, Function refetch, BuildContext ctx) async {
     String? accessToken = Storage().getString('accessToken');
     try {
-      Uri url = Uri.parse('${Environment.appBaseUrl}/api/address/default/?id=$id');
+      Uri url =
+          Uri.parse('${Environment.appBaseUrl}/api/address/default/?id=$id');
       final response = await http.patch(
         url,
         headers: {
@@ -70,10 +79,12 @@ class AddressNotifier with ChangeNotifier {
     _defaultToggle = true;
     notifyListeners();
   }
+
   void deleteAddress(int id, Function refetch, BuildContext ctx) async {
     String? accessToken = Storage().getString('accessToken');
     try {
-      Uri url = Uri.parse('${Environment.appBaseUrl}/api/address/delete/?id=$id');
+      Uri url =
+          Uri.parse('${Environment.appBaseUrl}/api/address/delete/?id=$id');
       final response = await http.delete(
         url,
         headers: {
@@ -90,6 +101,30 @@ class AddressNotifier with ChangeNotifier {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+    _defaultToggle = true;
+    notifyListeners();
+  }
+
+  void addAddress(String data, BuildContext ctx) async {
+    String? accessToken = Storage().getString('accessToken');
+    try {
+      Uri url = Uri.parse('${Environment.appBaseUrl}/api/address/add/');
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $accessToken',
+        },
+        body: data,
+      );
+      if (response.statusCode == 201) {
+        refetchA();
+        ctx.pop();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      showErrorPopup(ctx, e.toString(), 'Error adding address', true);
     }
     _defaultToggle = true;
     notifyListeners();
