@@ -22,4 +22,7 @@ class Environment {
     return dotenv.env['MAPS_API_KEY'] ?? 'MAPS_API_KEY not found';
   }
 
+  static String get paymentBaseUrl {
+    return dotenv.env['PAYMENT_BASE_URL'] ?? 'PAYMENT_BASE_URL not found';
+  }
 }
