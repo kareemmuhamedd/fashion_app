@@ -7,6 +7,7 @@ import 'package:fashion_app/src/cart/controllers/cart_notifier.dart';
 import 'package:fashion_app/src/categories/controllers/category_notifier.dart';
 import 'package:fashion_app/src/entrypoint/controllers/bottom_tab_notifier.dart';
 import 'package:fashion_app/src/home/controllers/home_tab_notifier.dart';
+import 'package:fashion_app/src/notification/controllers/notification_notifier.dart';
 import 'package:fashion_app/src/onboarding/controllers/onboarding_notifier.dart';
 import 'package:fashion_app/src/products/controllers/color_sizes_notifier.dart';
 import 'package:fashion_app/src/products/controllers/product_notifier.dart';
@@ -41,6 +42,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => WishlistNotifier()),
         ChangeNotifierProvider(create: (_) => CartNotifier()),
         ChangeNotifierProvider(create: (_) => AddressNotifier()),
+        ChangeNotifierProvider(create: (_) => NotificationNotifier()),
       ],
       child: const MyApp(),
     ),

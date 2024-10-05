@@ -63,7 +63,9 @@ class CustomAppBar extends HookWidget {
           )
         ],
       ),
-      actions: const [NotificationWidget()],
+      actions: const [
+        NotificationWidget(),
+      ],
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(55.h),
         child: GestureDetector(
