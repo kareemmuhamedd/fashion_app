@@ -1,14 +1,13 @@
 import 'dart:ui';
+import 'package:fashion_app/src/notification/models/notification_count_model.dart';
 
-import 'package:fashion_app/src/cart/models/cart_count_model.dart';
-
-class FetchCartCount {
-  final CartCountModel count;
+class FetchNotificationCount {
+  final NotificationCountModel count;
   final bool isLoading;
   final String? error;
   final VoidCallback refetch;
 
-  FetchCartCount({
+  FetchNotificationCount({
     required this.count,
     required this.isLoading,
     required this.error,
